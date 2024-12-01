@@ -74,11 +74,11 @@ class Vehicle
         {   
 
             if(x==1)
-                return 108;
+                return 108;//kochi
             else if(x==2)
-                return 107;
+                return 107;//trivandrum
             else if(x==3)
-                return 718;
+                return 718;//chennai
             else
                 return 0;
         }
