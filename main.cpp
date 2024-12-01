@@ -131,3 +131,86 @@ class Quadruple_Axle
         string payment;
     }
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+int main()
+{
+    vector<Vehicle*> vehicles;
+    int num_vehicles;
+    cout << "Enter the number of vehicles: ";
+    cin >> num_vehicles;
+
+    for (int i = 0; i < num_vehicles; ++i)
+    {
+        cout << "Vehicle " << i + 1 << ":\n";
+        cout << "Select type (1: Single Axle, 2: Double Axle, 3: Triple Axle, 4: Quadruple Axle): ";
+        int type;
+        cin >> type;
+
+        Vehicle* vehicle = nullptr;
+        switch (type)
+        {
+        case 1:
+            vehicle = new Single_Axle();
+            break;
+        case 2:
+            vehicle = new Double_Axle();
+            break;
+        case 3:
+            vehicle = new Triple_Axle();
+            break;
+        case 4:
+            vehicle = new Quadruple_Axle();
+            break;
+        default:
+            cout << "Invalid\n";
+            continue;
+        }
+
+        cout<< "Toll Details:"
+        for (const auto& vehicle : vehicles)
+        {
+            vehicle->print();
+        }
+
