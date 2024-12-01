@@ -83,9 +83,9 @@ class Vehicle
                 return 0;
         }
 
-        void virtual valid();
+        void virtual valid(){}
 
-        void virtual toll();
+        void virtual toll(){}
 };
 
 class Single_Axle: public Vehicle
