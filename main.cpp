@@ -70,7 +70,7 @@ class Vehicle
         }
 
         /*basically this function returns the value of prev toll distance based on user input (menu driven)*/
-        int get_toll_distance(int x)
+        int get_toll_distance()
         {   
             string city;
             cout<<"Select the city: 1.Kochi 2.Trivandrum 3.Chennai 4.Ernakulam 5.Banglore "<<endl;
