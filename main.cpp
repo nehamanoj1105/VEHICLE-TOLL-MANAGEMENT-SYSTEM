@@ -99,9 +99,37 @@ class Vehicle
             }
         }
 
-        void virtual valid(){}
+        void virtual valid()
 
-        void virtual toll(){}
+        void virtual toll()
+        {
+            toll_fee = axle * 2 * get_toll_distance();
+
+            // if(fuel=="Electric" || fuel == "CNG")
+            //     toll_fee=toll_fee*0.9;
+            // else if(fuel=="Petrol")
+            //     toll_fee=toll_fee*0.95;
+            
+            // if(registration=="Kerala")
+            //     toll_fee=toll_fee * 0.9;
+            
+            // if(payment=="Digital")
+            //     toll_fee=toll_fee*0.9;
+
+            // if(public_transport)
+            //     toll_fee=toll_fee*0;
+
+            // if(manufacture_date < 2014)
+            //     toll_fee=toll_fee*1.5;
+                
+            // if(toll_type=="Round")
+            //     toll_fee=toll_fee*1.8;
+            // else if(toll_type=="Day Pass")
+                
+            cout << "Your Toll is: " << toll_fee << endl;
+
+        }
+
 };
 
 class Single_Axle: public Vehicle
@@ -128,10 +156,10 @@ class Single_Axle: public Vehicle
                 cout << "You're not Eligible" << endl;
         }
 
-        void toll()
-        {
-            cout << "Your Toll is: " << public_transport <<endl;
-        }
+        // void toll()
+        // {
+        //     cout << "Your Toll is: " << public_transport <<endl;
+        // }
 };
 
 class Double_Axle : public Vehicle
@@ -161,10 +189,10 @@ class Double_Axle : public Vehicle
                 cout << "You're not Eligible" << endl;
         }
 
-        void toll()
-        {
-            cout << "Your Toll is: " << public_transport << endl;
-        }
+        // void toll()
+        // {
+        //     cout << "Your Toll is: " << public_transport << endl;
+        // }
 };
 
 class Triple_Axle:public Vehicle
@@ -204,10 +232,10 @@ class Triple_Axle:public Vehicle
                 cout << "You're not Eligible" << endl;
         }
 
-        void toll()
-        {
-            cout << "Your Toll is: " << public_transport <<endl;
-        }
+        // void toll()
+        // {
+        //     cout << "Your Toll is: " << public_transport <<endl;
+        // }
 };
 
 class Quadruple_Axle: public Vehicle
@@ -246,10 +274,10 @@ class Quadruple_Axle: public Vehicle
                 cout << "You're not Eligible" << endl;
         }
 
-        void toll()
-        {
-            cout << "Your Toll is: " <<endl;
-        }
+        // void toll()
+        // {
+        //     cout << "Your Toll is: " <<endl;
+        // }
 };
 
 
