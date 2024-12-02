@@ -23,6 +23,7 @@ class Vehicle
         bool public_transport;
         string payment;//cash or fasttag
         float toll_fee;
+        string city;
 
 
         Vehicle()
@@ -30,8 +31,8 @@ class Vehicle
             cout << "Enter Weight of the Vehicle: " << endl;
             cin >> weight;
             
-            cout << "Enter Distance from previous Toll: " << endl;
-            cin >> prev_toll_distance;
+            /*cout << "Enter Distance from previous Toll: " << endl;
+            cin >> prev_toll_distance;*/
 
             cout << "Enter Fuel type: " << endl;
             cin >> fuel;
@@ -55,11 +56,10 @@ class Vehicle
             cin >> payment;
         }
 
-        Vehicle(float weight, int prev_toll_distance, string fuel, int manufacture_date, string registation,string toll_type,int engine_capacity,bool public_transport,string payment)
+        Vehicle(float weight, string city, string fuel, int manufacture_date, string registation,string toll_type,int engine_capacity,bool public_transport,string payment)
         {
             this -> weight = weight;
-            this -> axle = 2;
-            this -> prev_toll_distance = prev_toll_distance;
+            this -> city = city;
             this -> fuel = fuel;
             this -> manufacture_date = manufacture_date;
             this -> registation = registation; 
@@ -95,6 +95,7 @@ class Vehicle
                 default:
                     cout<<"Invalid";
                     continue;
+            }
         }
 
         void virtual valid(){}
@@ -145,6 +146,8 @@ class Double_Axle : public Vehicle
         {
             axle=2;
         }
+
+        
 
         void valid()
         {
@@ -291,4 +294,6 @@ int main()
         {
             vehicle->toll();
         }
+    }
+}
 
