@@ -72,15 +72,29 @@ class Vehicle
         /*basically this function returns the value of prev toll distance based on user input (menu driven)*/
         int get_toll_distance(int x)
         {   
-
-            if(x==1)
-                return 108;//kochi
-            else if(x==2)
-                return 107;//trivandrum
-            else if(x==3)
-                return 718;//chennai
-            else
-                return 0;
+            string city;
+            cout<<"Select the city: 1.Kochi 2.Trivandrum 3.Chennai 4.Ernakulam 5.Banglore "<<endl;
+            cin>>city;
+            switch(city)
+            {
+                case 1:
+                    return 108;//kochi
+                    break;
+                case 2:
+                    return 107;//trivandrum
+                    break;
+                case 3:
+                    return 718;//chennai
+                    break;
+                case 4:
+                    return 400;//ernakulam
+                    break;
+                case 5:
+                    return 1024;//Banglore
+                    break;
+                default:
+                    cout<<"Invalid";
+                    continue;
         }
 
         void virtual valid(){}
