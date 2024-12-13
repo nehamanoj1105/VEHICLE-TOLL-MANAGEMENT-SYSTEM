@@ -1,3 +1,7 @@
+#include <fstream>
+#include <iostream>
+#include <iostream>
+#include <fstream>
 #include <iostream>
 #include <bits/stdc++.h>
 #include <string>
@@ -10,6 +14,11 @@ struct Date
     int year;
 };
 
+struct Plate{
+    string state;
+    int number;
+};
+
 class Vehicle
 {
     public:
@@ -17,34 +26,34 @@ class Vehicle
         int axle;
         int prev_toll_distance;
         string fuel;
-        int manufacture_date;
-        string registation; //state of registration
-        string toll_type; //one way trip/two way trip/oneday pass/monthly pass
+        Date manufacture_date;
+        Plate registration; // state of registration
+        string toll_type; // one way trip/two way trip/oneday pass/monthly pass
         int engine_capacity;
         bool public_transport;
-        string payment;//cash or fasttag
+        string payment; // cash or fasttag
         float toll_fee;
         string city;
 
-
         Vehicle()
         {
+
+            cout << "Enter Registration Plate: " << endl;
+            cin >> registration.state >> registration.number;
+
+            cout << "Enter Date of Manufacture (DD-MM-YYYY): " << endl;
+            cin >> manufacture_date.day >> manufacture_date.month >> manufacture_date.year;
+
             cout << "Enter Weight of the Vehicle: " << endl;
             cin >> weight;
             
             /*cout << "Enter Distance from previous Toll: " << endl;
             cin >> prev_toll_distance;*/
 
-            cout << "Enter Fuel type: " << endl;
+            cout << "Enter Fuel type (Petrol, Electric, CNG, Diesel):  " << endl;
             cin >> fuel;
 
-            cout << "Enter Date of Manufacture: " << endl;
-            cin >> manufacture_date;
-
-            cout << "Enter Place of Registration: " << endl;
-            cin >> registation;
-
-            cout << "Enter Toll Type: " << endl;
+            cout << "Enter Toll Type (Single, Round, Toll Pass): " << endl;
             cin >> toll_type;
 
             cout << "Enter Engine Capacity: " << endl;
@@ -53,86 +62,96 @@ class Vehicle
             cout << "Public_transport Transport Vehicle? (1 for true/ 0 for false)" << endl;
             cin >> public_transport;
 
-            cout << "Enter Payment Type? (Cash/Fastag)" << endl;
+            cout << "Enter Payment Type? (Cash/Digital)" << endl;
             cin >> payment;
         }
 
-        Vehicle(float weight, string city, string fuel, int manufacture_date, string registation,string toll_type,int engine_capacity,bool public_transport,string payment)
-        {
-            this -> weight = weight;
-            this -> city = city;
-            this -> fuel = fuel;
-            this -> manufacture_date = manufacture_date;
-            this -> registation = registation; 
-            this -> toll_type = toll_type;
-            this -> engine_capacity = engine_capacity;
-            this -> public_transport = public_transport;
-            this -> payment = payment;
-        }
+        // Vehicle(float weight, string city, string fuel, Date manufacture_date, string registation, string toll_type, int engine_capacity, bool public_transport, string payment)
+        // {
+        //     this->weight = weight;
+        //     this->city = city;
+        //     this->fuel = fuel;
+        //     this->manufacture_date = manufacture_date;
+        //     this->registation = registration; 
+        //     this->toll_type = toll_type;
+        //     this->engine_capacity = engine_capacity;
+        //     this->public_transport = public_transport;
+        //     this->payment = payment;
+        // }
 
-        /*basically this function returns the value of prev toll distance based on user input (menu driven)*/
         int get_toll_distance()
         {   
-            string city;
-            cout<<"Select the city: 1.Kochi 2.Trivandrum 3.Chennai 4.Ernakulam 5.Banglore "<<endl;
-            cin>>city;
-            switch(city)
+            int city;
+            cout << "Select the city: 1.Kochi 2.Trivandrum 3.Chennai 4.Ernakulam 5.Banglore " << endl;
+            cin >> city;
+            switch (city)
             {
                 case 1:
-                    return 108;//kochi
-                    break;
+                    return 108; // Kochi
                 case 2:
-                    return 107;//trivandrum
-                    break;
+                    return 107; // Trivandrum
                 case 3:
-                    return 718;//chennai
-                    break;
+                    return 718; // Chennai
                 case 4:
-                    return 400;//ernakulam
-                    break;
+                    return 400; // Ernakulam
                 case 5:
-                    return 1024;//Banglore
-                    break;
+                    return 1024; // Banglore
                 default:
-                    cout<<"Invalid";
-                    continue;
+                    cout << "Invalid" << endl;
+                    return -1;
             }
         }
 
-        void virtual valid()
+        virtual int valid() {}
 
-        void virtual toll()
+        int toll()
         {
-            toll_fee = axle * 2 * get_toll_distance();
 
-            // if(fuel=="Electric" || fuel == "CNG")
-            //     toll_fee=toll_fee*0.9;
-            // else if(fuel=="Petrol")
-            //     toll_fee=toll_fee*0.95;
+            toll_fee = axle * 2 * get_toll_distance(); // Base calculation
+
+            // Weight surcharge for heavy vehicles
+            if (axle >= 3)
+            {
+                toll_fee *= 1.1; // 10% surcharge for heavy vehicles
+            }
+
+            // Apply fuel type discounts
+            if (fuel == "Electric" || fuel == "CNG")
+                toll_fee *= 0.9; // 10% discount
+            else if (fuel == "Petrol")
+                toll_fee *= 0.95; // 5% discount
+
+            // State registration discount
+            if (registration.state == "KL")
+                toll_fee *= 0.9; // 10% discount
+
+            // Payment mode discount
+            if (payment == "Digital")
+                toll_fee *= 0.9; // 10% discount
+
+            // Public transport exemption
+            if (public_transport)
+                toll_fee = 0; // Exempt from toll
+
+            // Manufacture year surcharge
+            if (manufacture_date.year > 2014)
+                toll_fee *= 1.5; // 50% surcharge
+
+            // Toll type adjustments
+            if (toll_type == "Round")
+                toll_fee *= 1.8; 
+            // 80% additional for round trip
+            else if (toll_type == "Day Pass")
+                toll_fee *= 1.2; 
+            // 20% additional for day pass
+
+
             
-            // if(registration=="Kerala")
-            //     toll_fee=toll_fee * 0.9;
-            
-            // if(payment=="Digital")
-            //     toll_fee=toll_fee*0.9;
-
-            // if(public_transport)
-            //     toll_fee=toll_fee*0;
-
-            // if(manufacture_date < 2014)
-            //     toll_fee=toll_fee*1.5;
-                
-            // if(toll_type=="Round")
-            //     toll_fee=toll_fee*1.8;
-            // else if(toll_type=="Day Pass")
-                
-            cout << "Your Toll is: " << toll_fee << endl;
-
+            return toll_fee;
         }
-
 };
 
-class Single_Axle: public Vehicle
+class Single_Axle : public Vehicle
 {
     public:
         /* 
@@ -140,26 +159,26 @@ class Single_Axle: public Vehicle
         weight= 100kg -1000kg
         engine capacity- 100cc to 1000cc;
         */
-        Single_Axle()
+        Single_Axle() : Vehicle() // Default constructor
         {
-            axle=1;
+            axle = 1;
         }
 
-        void valid()
+        // Single_Axle(float weight, string city, string fuel, int manufacture_date, string registation, string toll_type, int engine_capacity, bool public_transport, string payment) 
+        // : Vehicle(weight, city, fuel, manufacture_date, registation, toll_type, engine_capacity, public_transport, payment)
+        // {
+        //     axle = 1;
+        // }
+
+        int valid()
         {
-            if ((weight>100 && weight<1000) && (engine_capacity>100 && engine_capacity<1000))
+            if ((weight > 100 && weight < 1000) && (engine_capacity > 100 && engine_capacity < 1000))
             {
-                cout << "You're Eligible for Single Axle Toll" << endl;
-                toll();
+                return 1;
             }
             else
-                cout << "You're not Eligible" << endl;
+                return 0;
         }
-
-        // void toll()
-        // {
-        //     cout << "Your Toll is: " << public_transport <<endl;
-        // }
 };
 
 class Double_Axle : public Vehicle
@@ -171,34 +190,31 @@ class Double_Axle : public Vehicle
         engine capacity- 1000cc to 5000cc
         */
 
-        Double_Axle()
+        Double_Axle() : Vehicle() // Default constructor
         {
-            axle=2;
+            axle = 2;
         }
 
-        
+        // Double_Axle(float weight, string city, string fuel, int manufacture_date, string registation, string toll_type, int engine_capacity, bool public_transport, string payment) 
+        // : Vehicle(weight, city, fuel, manufacture_date, registation, toll_type, engine_capacity, public_transport, payment)
+        // {
+        //     axle = 2;
+        // }
 
-        void valid()
+        int valid()
         {
-            if ((weight>1000 && weight<5000) && (engine_capacity>1000 && engine_capacity<5000))
+            if ((weight > 1000 && weight < 5000) && (engine_capacity > 1000 && engine_capacity < 5000))
             {
-                cout << "You're Eligible for Double Axle Toll" << endl;
-                toll();
+                return 1;
             }
             else
-                cout << "You're not Eligible" << endl;
+                return 0;
         }
-
-        // void toll()
-        // {
-        //     cout << "Your Toll is: " << public_transport << endl;
-        // }
 };
 
-class Triple_Axle:public Vehicle
+class Triple_Axle : public Vehicle
 {
     public:
-
         int goods_weight;
         /*
         axle =3;
@@ -206,39 +222,33 @@ class Triple_Axle:public Vehicle
         engine capacity-  5000cc - 8000cc
         goods_weight - max 10000kg
         */
-        Triple_Axle()
+        Triple_Axle() : Vehicle() // Default constructor
         {
-            axle=3;
+            axle = 3;
 
             cout << "Weight of Goods? " << endl;
             cin >> goods_weight;
         }
 
-        Triple_Axle(float weight, int prev_toll_distance, string fuel, int manufacture_date, string registation,string toll_type,int engine_capacity,bool public_transport,string payment,int goods_weight):
-        Vehicle(weight, prev_toll_distance, fuel, manufacture_date, registation, toll_type, engine_capacity, public_transport,payment)
-        {
-            axle=3;
-            this -> goods_weight = goods_weight;
-        }
+        // Triple_Axle(float weight, string city, string fuel, int manufacture_date, string registation, string toll_type, int engine_capacity, bool public_transport, string payment, int goods_weight) 
+        // : Vehicle(weight, city, fuel, manufacture_date, registation, toll_type, engine_capacity, public_transport, payment)
+        // {
+        //     axle = 3;
+        //     this->goods_weight = goods_weight;
+        // }
 
-        void valid()
+        int valid()
         {
-            if ((weight>100 && weight<1000) && (engine_capacity>100 && engine_capacity<1000) && (goods_weight<10000))
+            if ((weight > 5000 && weight < 8000) && (engine_capacity > 5000 && engine_capacity < 8000) && (goods_weight <= 10000))
             {
-                cout << "You're Eligible for Single Axle Toll" << endl;
-                toll();
+                return 1;
             }
             else
-                cout << "You're not Eligible" << endl;
+                return 0;
         }
-
-        // void toll()
-        // {
-        //     cout << "Your Toll is: " << public_transport <<endl;
-        // }
 };
 
-class Quadruple_Axle: public Vehicle
+class Quadruple_Axle : public Vehicle
 {
     public:
         int goods_weight;
@@ -248,44 +258,42 @@ class Quadruple_Axle: public Vehicle
         engine capacity=8000cc+
         goods_weight - 10000kg to 20000kg
         */
-        Quadruple_Axle()
+        Quadruple_Axle() : Vehicle() // Default constructor
         {
-            axle=4;
+            axle = 4;
 
             cout << "Weight of Goods? " << endl;
             cin >> goods_weight;        
         }
 
-        Quadruple_Axle(float weight, int prev_toll_distance, string fuel, int manufacture_date, string registation,string toll_type,int engine_capacity,bool public_transport,string payment,int goods_weight):
-        Vehicle(weight, prev_toll_distance, fuel, manufacture_date, registation, toll_type, engine_capacity, public_transport,payment)
-        {
-            axle=4;
-            this -> goods_weight = goods_weight;
-        }
+        // Quadruple_Axle(float weight, string city, string fuel, int manufacture_date, string registation, string toll_type, int engine_capacity, bool public_transport, string payment, int goods_weight) 
+        // : Vehicle(weight, city, fuel, manufacture_date, registation, toll_type, engine_capacity, public_transport, payment)
+        // {
+        //     axle = 4;
+        //     this->goods_weight = goods_weight;
+        // }
 
-        void valid()
+        int valid()
         {
-            if ((weight>100 && weight<1000) && (engine_capacity>100 && engine_capacity<1000) && (goods_weight>10000 && goods_weight<20000) )
+            if ((weight > 8000 && weight <= 10000) && (engine_capacity > 8000) && (goods_weight > 10000 && goods_weight <= 20000))
             {
-                cout << "You're Eligible for Single Axle Toll" << endl;
-                toll();
+                return 1;
             }
             else
-                cout << "You're not Eligible" << endl;
+                return 0;
         }
-
-        // void toll()
-        // {
-        //     cout << "Your Toll is: " <<endl;
-        // }
 };
-
-
-
-
 
 int main()
 {
+    std::ofstream outf{ "Sample.txt", std::ios::app };
+
+    if (!outf)
+    {
+        std::cerr << "Sample.txt could not be opened for writing!\n";
+        return 1;
+    }
+
     vector<Vehicle*> vehicles;
     int num_vehicles;
     cout << "Enter the number of vehicles: ";
@@ -318,11 +326,26 @@ int main()
             continue;
         }
 
-        cout<< "Toll Details:"
-        for (const auto& vehicle : vehicles)
-        {
-            vehicle->toll();
-        }
+        vehicles.push_back(vehicle);
     }
+
+
+    // cout << "Toll Details Printed Successfully.\n";
+
+    
+    for (const auto& vehicle : vehicles)
+    {
+        if (vehicle->valid())
+            outf << "The Toll Fee of Vehicle " << vehicle->registration.state << " " <<  vehicle->registration.number << " is: " << vehicle->toll() << endl ;
+        else
+            outf << "Vehicle No " << vehicle->registration.state << " " <<  vehicle->registration.number << " Not Eligible" << endl;
+    }
+    
+    for (auto vehicle : vehicles)
+    {
+        delete vehicle;
+    }
+
+    return 0;
 }
 
