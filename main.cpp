@@ -24,7 +24,7 @@ class Vehicle
     public:
         float weight;
         int axle;
-        int prev_toll_distance;
+        int toll_distance;
         string fuel;
         Date manufacture_date;
         Plate registration; // state of registration
@@ -48,7 +48,7 @@ class Vehicle
             cin >> weight;
             
             /*cout << "Enter Distance from previous Toll: " << endl;
-            cin >> prev_toll_distance;*/
+            cin >> toll_distance;*/
 
             cout << "Enter Fuel type (Petrol, Electric, CNG, Diesel):  " << endl;
             cin >> fuel;
@@ -64,6 +64,8 @@ class Vehicle
 
             cout << "Enter Payment Type? (Cash/Digital)" << endl;
             cin >> payment;
+
+            toll_distance=get_toll_distance();
         }
 
         // Vehicle(float weight, string city, string fuel, Date manufacture_date, string registation, string toll_type, int engine_capacity, bool public_transport, string payment)
@@ -107,7 +109,7 @@ class Vehicle
         int toll()
         {
 
-            toll_fee = axle * 2 * get_toll_distance(); // Base calculation
+            toll_fee = axle * 2 * toll_distance; // Base calculation
 
             // Weight surcharge for heavy vehicles
             if (axle >= 3)
@@ -330,7 +332,7 @@ int main()
     }
 
 
-    // cout << "Toll Details Printed Successfully.\n";
+    cout << "Toll Details Printed Successfully.\n";
 
     
     for (const auto& vehicle : vehicles)
