@@ -1,8 +1,5 @@
 #include <fstream>
 #include <iostream>
-#include <iostream>
-#include <fstream>
-#include <iostream>
 #include <bits/stdc++.h>
 #include <string>
 using namespace std;
@@ -21,7 +18,7 @@ struct Plate{
 
 class Vehicle
 {
-    public:
+protected:
         float weight;
         int axle;
         int toll_distance;
@@ -34,8 +31,10 @@ class Vehicle
         string payment; // cash or fasttag
         float toll_fee;
         string city;
+public:
+    	Vehicle() : axle(0), toll_fee(0.0), toll_distance(0), public_transport(false) {}
 
-        Vehicle()
+	void inputvehicledetails()
         {
 
             cout << "Enter Registration Plate: " << endl;
@@ -54,7 +53,8 @@ class Vehicle
             cin >> fuel;
 
             cout << "Enter Toll Type (Single, Round, Toll Pass): " << endl;
-            cin >> toll_type;
+            cin.ignore();
+            getline(cin, toll_type);
 
             cout << "Enter Engine Capacity: " << endl;
             cin >> engine_capacity;
@@ -81,11 +81,29 @@ class Vehicle
         //     this->payment = payment;
         // }
 
+	 string getRegistrationState() const 
+	 {
+		return registration.state;
+	 }
+
+	 int getRegistrationNumber() const 
+	 {
+		return registration.number;
+         }
         int get_toll_distance()
         {   
             int city;
             cout << "Select the city: 1.Kochi 2.Trivandrum 3.Chennai 4.Ernakulam 5.Banglore " << endl;
-            cin >> city;
+            while (true) {
+                cin >> city;
+                if (cin.fail() || city < 1 || city > 5) {
+                    cin.clear();
+                    cin.ignore(INT_MAX, '\n');
+                    cout << "Invalid input. Please enter a number between 1 and 5: ";
+                } else {
+                    break;
+                }
+            }
             switch (city)
             {
                 case 1:
@@ -99,12 +117,11 @@ class Vehicle
                 case 5:
                     return 1024; // Banglore
                 default:
-                    cout << "Invalid" << endl;
                     return -1;
             }
         }
 
-        virtual int valid() {}
+        virtual int valid() = 0;
 
         int toll()
         {
@@ -155,7 +172,7 @@ class Vehicle
 
 class Single_Axle : public Vehicle
 {
-    public:
+public:
         /* 
         axle=1;
         weight= 100kg -1000kg
@@ -165,14 +182,13 @@ class Single_Axle : public Vehicle
         {
             axle = 1;
         }
+        
+        void input()
+        {
+        	inputvehicledetails();
+        }
 
-        // Single_Axle(float weight, string city, string fuel, int manufacture_date, string registation, string toll_type, int engine_capacity, bool public_transport, string payment) 
-        // : Vehicle(weight, city, fuel, manufacture_date, registation, toll_type, engine_capacity, public_transport, payment)
-        // {
-        //     axle = 1;
-        // }
-
-        int valid()
+        int valid() override
         {
             if ((weight > 100 && weight < 1000) && (engine_capacity > 100 && engine_capacity < 1000))
             {
@@ -185,7 +201,7 @@ class Single_Axle : public Vehicle
 
 class Double_Axle : public Vehicle
 {
-    public:
+public:
         /*
         axle=2;
         weight= 1000kg - 5000kg;
@@ -196,14 +212,13 @@ class Double_Axle : public Vehicle
         {
             axle = 2;
         }
+        
+        void input()
+        {
+        	inputvehicledetails();
+        }
 
-        // Double_Axle(float weight, string city, string fuel, int manufacture_date, string registation, string toll_type, int engine_capacity, bool public_transport, string payment) 
-        // : Vehicle(weight, city, fuel, manufacture_date, registation, toll_type, engine_capacity, public_transport, payment)
-        // {
-        //     axle = 2;
-        // }
-
-        int valid()
+        int valid() override
         {
             if ((weight > 1000 && weight < 5000) && (engine_capacity > 1000 && engine_capacity < 5000))
             {
@@ -216,8 +231,9 @@ class Double_Axle : public Vehicle
 
 class Triple_Axle : public Vehicle
 {
-    public:
-        int goods_weight;
+private:
+	int goods_weight;
+public:
         /*
         axle =3;
         weight= 5000kg - 8000kg
@@ -227,19 +243,16 @@ class Triple_Axle : public Vehicle
         Triple_Axle() : Vehicle() // Default constructor
         {
             axle = 3;
-
-            cout << "Weight of Goods? " << endl;
-            cin >> goods_weight;
+        }
+        
+        void input()
+        {
+        	inputvehicledetails();
+        	cout << "Weight of Goods? " << endl;
+            	cin >> goods_weight;
         }
 
-        // Triple_Axle(float weight, string city, string fuel, int manufacture_date, string registation, string toll_type, int engine_capacity, bool public_transport, string payment, int goods_weight) 
-        // : Vehicle(weight, city, fuel, manufacture_date, registation, toll_type, engine_capacity, public_transport, payment)
-        // {
-        //     axle = 3;
-        //     this->goods_weight = goods_weight;
-        // }
-
-        int valid()
+        int valid() override
         {
             if ((weight > 5000 && weight < 8000) && (engine_capacity > 5000 && engine_capacity < 8000) && (goods_weight <= 10000))
             {
@@ -252,8 +265,9 @@ class Triple_Axle : public Vehicle
 
 class Quadruple_Axle : public Vehicle
 {
-    public:
-        int goods_weight;
+private:
+	int goods_weight;
+public:
         /*
         axle=4;
         weight= 8000kg to 10000kg
@@ -262,20 +276,17 @@ class Quadruple_Axle : public Vehicle
         */
         Quadruple_Axle() : Vehicle() // Default constructor
         {
-            axle = 4;
-
-            cout << "Weight of Goods? " << endl;
-            cin >> goods_weight;        
+            axle = 4;  
         }
 
-        // Quadruple_Axle(float weight, string city, string fuel, int manufacture_date, string registation, string toll_type, int engine_capacity, bool public_transport, string payment, int goods_weight) 
-        // : Vehicle(weight, city, fuel, manufacture_date, registation, toll_type, engine_capacity, public_transport, payment)
-        // {
-        //     axle = 4;
-        //     this->goods_weight = goods_weight;
-        // }
+	void input()
+        {
+        	inputvehicledetails();
+        	cout << "Weight of Goods? " << endl;
+            	cin >> goods_weight;
+        }
 
-        int valid()
+        int valid() override
         {
             if ((weight > 8000 && weight <= 10000) && (engine_capacity > 8000) && (goods_weight > 10000 && goods_weight <= 20000))
             {
@@ -285,6 +296,10 @@ class Quadruple_Axle : public Vehicle
                 return 0;
         }
 };
+
+
+
+
 
 int main()
 {
@@ -328,26 +343,32 @@ int main()
             continue;
         }
 
+        vehicle->inputvehicledetails(); // Collect vehicle input details
         vehicles.push_back(vehicle);
     }
 
-
     cout << "Toll Details Printed Successfully.\n";
 
-    
     for (const auto& vehicle : vehicles)
     {
         if (vehicle->valid())
-            outf << "The Toll Fee of Vehicle " << vehicle->registration.state << " " <<  vehicle->registration.number << " is: " << vehicle->toll() << endl ;
+        {
+            outf << "The Toll Fee of Vehicle " << vehicle->getRegistrationState()
+                 << " " << vehicle->getRegistrationNumber()
+                 << " is: " << vehicle->toll() << endl;
+        }
         else
-            outf << "Vehicle No " << vehicle->registration.state << " " <<  vehicle->registration.number << " Not Eligible" << endl;
+        {
+            outf << "Vehicle No " << vehicle->getRegistrationState()
+                 << " " << vehicle->getRegistrationNumber()
+                 << " Not Eligible" << endl;
+        }
     }
-    
-    for (auto vehicle : vehicles)
+
+    for (auto vehicle : vehicles)// for cleanig the memory allocated
     {
         delete vehicle;
     }
 
     return 0;
 }
-
