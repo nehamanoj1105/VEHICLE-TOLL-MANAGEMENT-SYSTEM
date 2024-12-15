@@ -31,6 +31,7 @@ protected:
         string payment; // cash or fasttag
         float toll_fee;
         string city;
+        
 public:
     	Vehicle() : axle(0), toll_fee(0.0), toll_distance(0), public_transport(false) {}
 
@@ -240,6 +241,7 @@ public:
         engine capacity-  5000cc - 8000cc
         goods_weight - max 10000kg
         */
+        
         Triple_Axle() : Vehicle() // Default constructor
         {
             axle = 3;
@@ -274,6 +276,7 @@ public:
         engine capacity=8000cc+
         goods_weight - 10000kg to 20000kg
         */
+        
         Quadruple_Axle() : Vehicle() // Default constructor
         {
             axle = 4;  
@@ -300,18 +303,40 @@ public:
 
 
 
+void load_blacklist(vector<string> &blacklist)
+{
+    ifstream blacklist_file("Blacklist.txt"); 
+    if (!blacklist_file)
+    {
+        cerr << "Blacklist.txt could not be opened!\n";
+        return;
+    }
+    string entry;
+    while (getline(blacklist_file, entry))
+    {
+        blacklist.push_back(entry);
+    }
+    blacklist_file.close();
+}
+
+bool is_blacklisted(const vector<string> &blacklist, const string &plate)
+{
+    return find(blacklist.begin(), blacklist.end(), plate) != blacklist.end();
+}
 
 int main()
 {
     std::ofstream outf{ "Sample.txt", std::ios::app };
-
     if (!outf)
     {
         std::cerr << "Sample.txt could not be opened for writing!\n";
         return 1;
     }
 
-    vector<Vehicle*> vehicles;
+    vector<string> blacklist;
+    load_blacklist(blacklist); //calls fn that opens and reads the blacklist file
+
+    vector<Vehicle *> vehicles;
     int num_vehicles;
     cout << "Enter the number of vehicles: ";
     cin >> num_vehicles;
@@ -323,7 +348,7 @@ int main()
         int type;
         cin >> type;
 
-        Vehicle* vehicle = nullptr;
+        Vehicle *vehicle = nullptr;
         switch (type)
         {
         case 1:
@@ -343,29 +368,30 @@ int main()
             continue;
         }
 
-        vehicle->inputvehicledetails(); // Collect vehicle input details
+        vehicle->inputvehicledetails();
         vehicles.push_back(vehicle);
     }
 
     cout << "Toll Details Printed Successfully.\n";
 
-    for (const auto& vehicle : vehicles)
+    for (const auto &vehicle : vehicles)
     {
-        if (vehicle->valid())
+        string plate = vehicle->getRegistrationState() + " " + to_string(vehicle->getRegistrationNumber());
+        if (is_blacklisted(blacklist, plate))
         {
-            outf << "The Toll Fee of Vehicle " << vehicle->getRegistrationState()
-                 << " " << vehicle->getRegistrationNumber()
-                 << " is: " << vehicle->toll() << endl;
+            outf << "Vehicle " << plate << " is Blacklisted.\n";
+        }
+        else if (vehicle->valid())
+        {
+            outf << "Vehicle " << plate << " is Eligible." << "The Toll Fee of Vehicle " << plate << " is: " << vehicle->toll() << endl;
         }
         else
         {
-            outf << "Vehicle No " << vehicle->getRegistrationState()
-                 << " " << vehicle->getRegistrationNumber()
-                 << " Not Eligible" << endl;
+            outf << "Vehicle No " << plate << " Not Eligible" << endl;
         }
     }
 
-    for (auto vehicle : vehicles)// for cleanig the memory allocated
+    for (auto vehicle : vehicles)
     {
         delete vehicle;
     }
