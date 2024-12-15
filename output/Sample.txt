@@ -1,0 +1,15 @@
+Vehicle KL 23041 is Blacklisted.
+Vehicle TN 23421 is Eligible.The Toll Fee of Vehicle TN 23421 is: 2592
+Vehicle No TK 234556 Not Eligible
+Vehicle KL 23041 is Blacklisted.
+Vehicle AP 23041 is Blacklisted.
+Vehicle No TN 23041 Not Eligible
+Vehicle KL 23041 is Blacklisted.
+Vehicle TN 23041 Not Eligible
+Vehicle AP 22323 Not Eligible
+Vehicle AP 23031 Not Eligible
+Vehicle TN 23041 Not Eligible
+Vehicle AP 23041 is Blacklisted.
+Vehicle AP 23041 is Blacklisted.
+Vehicle TN 23042 Not Eligible
+Vehicle AP 23034 Not Eligible
