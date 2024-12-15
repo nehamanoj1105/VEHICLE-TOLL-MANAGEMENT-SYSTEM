@@ -99,7 +99,7 @@ public:
         int get_toll_distance()
         {   
             int city;
-            cout << "Select the city: 1.Kochi 2.Trivandrum 3.Chennai 4.Ernakulam 5.Banglore " << endl;
+            cout << "Select the city: 1.Kochi 2.Trivandrum 3.Chennai 4.Ernakulam 5.Bangalore " << endl;
             while (true) 
             {
                 cin >> city;
@@ -125,7 +125,7 @@ public:
                 case 4:
                     return 400; // Ernakulam
                 case 5:
-                    return 1024; // Banglore
+                    return 1024; // Bangalore
                 default:
                     return -1;
             }
