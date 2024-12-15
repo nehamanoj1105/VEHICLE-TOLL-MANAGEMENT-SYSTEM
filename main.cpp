@@ -20,25 +20,25 @@
 
 // MAIN PART OF PROGRAM
 // The program starts by opening a file ("Sample.txt") in append mode to store results.
-// A vector `blacklist` is created to store the blacklisted vehicle plates.
-// The `load_blacklist()` function is called to read and populate the blacklist from a file.
+// A vector 'blacklist' is created to store the blacklisted vehicle plates.
+// The 'load_blacklist()' function is called to read and populate the blacklist from a file.
 
-// A vector `vehicles` is created to hold pointers to `Vehicle` objects.
+// A vector 'vehicles' is created to hold pointers to 'Vehicle' objects.
 // The user is prompted to enter the number of vehicles to be processed.
 // A loop iterates over the number of vehicles entered by the user.
 // The user selects the type of vehicle (Single Axle, Double Axle, etc.).
 
-// Based on the selected type, the appropriate derived class (Single_Axle, Double_Axle, etc.) object is created and its details are collected through the `inputvehicledetails()` function.
-// The program checks if the first two vehicles in the list are the same by comparing their registration details using the overloaded `==` operator.
+// Based on the selected type, the appropriate derived class (Single_Axle, Double_Axle, etc.) object is created and its details are collected through the 'inputvehicledetails()' function.
+// The program checks if the first two vehicles in the list are the same by comparing their registration details using the overloaded '==' operator.
 
 // After collecting the details for all vehicles, the program writes the toll details to a file.
-// It checks each vehicle against the blacklist using the `is_blacklisted()` function.
+// It checks each vehicle against the blacklist using the 'is_blacklisted()' function.
 // If the vehicle is blacklisted, it writes the vehicle's plate as blacklisted in the output file.
 // If the vehicle is not blacklisted and valid, it writes the vehicle's plate along with the calculated toll fee.
 // If the vehicle is not valid, it writes that the vehicle is not eligible.
 
-// Finally, the program cleans up the dynamically allocated `Vehicle` objects to prevent memory leaks.
-// The program exits successfully with a return value of `0`.
+// The program cleans up the dynamically allocated 'Vehicle' objects to prevent memory leaks.
+// The program exits successfully with a return value of '0'.
 
 
 #include <fstream>   // For file input/output operations (ifstream, ofstream, fstream)
@@ -256,7 +256,7 @@ public:
         - Axle = 1
         - Weight = 100kg to 1000kg
         - Engine Capacity = 100cc to 1000cc
-    - Overrides `inputvehicledetails()` and `valid()` methods.
+    - Overrides 'inputvehicledetails()' and 'valid()' methods.
 */
 class Single_Axle : public Vehicle
 {
@@ -279,6 +279,15 @@ public:
         {
         	Vehicle::inputvehicledetails(); // Call base class method to input vehicle details
         }
+	/*
+        Overridden valid() function:
+        - Checks if the vehicle meets the criteria:
+            - Weight is between 100kg and 1000kg.
+            - Engine capacity is between 100cc and 1000cc.
+        - Returns:
+            - 1 (true) if criteria are met.
+            - 0 (false) otherwise.
+    	*/
 
         int valid() override
     	{
@@ -302,7 +311,7 @@ public:
         - Axle = 2
         - Weight = 1000kg to 5000kg
         - Engine Capacity = 1000cc to 5000cc
-    - Overrides `inputvehicledetails()` and `valid()` methods.
+    - Overrides 'inputvehicledetails()' and 'valid()' methods.
 */
 class Double_Axle : public Vehicle
 {
@@ -359,7 +368,7 @@ public:
         - Weight = 5000kg to 8000kg
         - Engine Capacity = 5000cc to 8000cc
         - Additional condition: Goods weight (max 10000kg) can be managed.
-    - Overrides `inputvehicledetails()` and `valid()` methods.
+    - Overrides 'inputvehicledetails()' and 'valid()' methods.
 */
 class Triple_Axle : public Vehicle
 {
@@ -416,7 +425,7 @@ public:
         - Weight = 8000kg to 10000kg
         - Engine Capacity = 8000cc+
         - Goods Weight = 10000kg to 20000kg
-    - Overrides `inputvehicledetails()` and `valid()` methods.
+    - Overrides 'inputvehicledetails()' and 'valid()' methods.
 */
 class Quadruple_Axle : public Vehicle
 {
