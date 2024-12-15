@@ -16,10 +16,10 @@ Encapsulation ensures that data within a class is hidden from unauthorized acces
 Example:
  string getPlate() const
         {
-            string temp= getRegistrationState() + " " + to_string(getRegistrationNumber());
-            return temp;
+            return getRegistrationState() + " " + to_string(getRegistrationNumber());        
         }
-    Here, the encapsulated registration information is accessed through `getRegistrationState()` and `getRegistrationNumber()` functions.
+ 
+ Here, the encapsulated registration information is accessed through `getRegistrationState()` and `getRegistrationNumber()` functions.
 
  2. Inheritance
 Inheritance allows derived classes to inherit properties and behaviors from a base class, enabling code reuse and hierarchy establishment. In this project:
@@ -56,7 +56,9 @@ public:
                 return 0;
         }
 };
-  Here, `Single_Axle` inherits common vehicle attributes and behaviors from `Vehicle` but adapts them for its specific requirements.
+
+Here, `Single_Axle` inherits common vehicle attributes and behaviors from `Vehicle` but adapts them for its specific requirements.
+
 3. Polymorphism
 Polymorphism allows objects to take on many forms, enabling functions to behave differently depending on the context. In this project:
 •	The `Vehicle` class declares a pure virtual function `valid()` which is overridden in each derived class to provide specific validation logic for the respective vehicle type.
@@ -76,7 +78,7 @@ int valid() override
             else
                 return 0;
         }
-  Here, the `valid()` function behaves differently for each vehicle type based on the derived class implementation.
+Here, the `valid()` function behaves differently for each vehicle type based on the derived class implementation.
 
 4. Abstraction
 Abstraction hides implementation details from the user and focuses on essential functionalities. In this project:
@@ -86,7 +88,8 @@ Abstraction hides implementation details from the user and focuses on essential 
 
 Example:
   virtual int valid() = 0; // Abstract function ensuring derived classes implement their specific validation logic
-  The abstract `valid()` method ensures that only the derived classes know the specific validation rules, hiding the details from the main program.
+
+The abstract `valid()` method ensures that only the derived classes know the specific validation rules, hiding the details from the main program.
 
 File Structure:
 •	Vehicle Class: Base class encapsulating common vehicle attributes and behaviors.
