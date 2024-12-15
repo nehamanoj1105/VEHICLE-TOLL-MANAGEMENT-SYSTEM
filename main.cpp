@@ -374,7 +374,7 @@ int main()
     for (const auto &vehicle : vehicles)
     {
         string plate = vehicle->getRegistrationState() + " " + to_string(vehicle->getRegistrationNumber());
-        if (is_blacklisted(blacklist, vehicle))
+        if (is_blacklisted(blacklist, plate))
         {
             outf << "Vehicle " << plate << " is Blacklisted.\n";
         }
