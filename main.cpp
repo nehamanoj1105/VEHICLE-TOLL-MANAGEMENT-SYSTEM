@@ -33,9 +33,9 @@ class Vehicle
             string city;
             
     public:
-        Vehicle() : axle(0), toll_fee(0.0), toll_distance(0), public_transport(false) {}
-
-        void inputvehicledetails()
+            Vehicle() : axle(0), toll_fee(0.0), toll_distance(0), public_transport(false) {}
+    
+            void inputvehicledetails()
             {
 
                 cout << "Enter Registration Plate: " << endl;
@@ -81,6 +81,17 @@ class Vehicle
             //     this->public_transport = public_transport;
             //     this->payment = payment;
             // }
+
+            bool operator==(string X)
+            {
+                string temp= getRegistrationState() + " " + to_string(getRegistrationNumber());
+    
+                if(temp==X)
+                    return true;
+                else
+                    return false;
+            }
+
 
             string getRegistrationState() const 
             {
