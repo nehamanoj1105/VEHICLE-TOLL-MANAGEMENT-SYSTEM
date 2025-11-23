@@ -1,0 +1,4 @@
+Vehicle AP 23041 is Blacklisted.
+Vehicle AP 23431 is Eligible.The Toll Fee of Vehicle AP 23431 is: 1040
+Vehicle TN 23456 is Eligible.The Toll Fee of Vehicle TN 23456 is: 0
+Vehicle TS 21345 Not Eligible
